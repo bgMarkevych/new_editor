@@ -6,7 +6,10 @@ import android.content.Context
 import android.graphics.PointF
 import android.graphics.RectF
 import android.util.Log
-import android.view.*
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
+import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.dynamicanimation.animation.FlingAnimation
 import androidx.dynamicanimation.animation.FloatValueHolder
@@ -14,6 +17,7 @@ import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+
 
 const val FLING_VELOCITY_TOLERANCE = 2000
 
@@ -112,6 +116,7 @@ class ZoomEngine(context: Context,
 
     private inner class ScaleGestureListener : ScaleGestureDetector.OnScaleGestureListener {
 
+        private val SCALE_ACCURACY = 1
         private var focusX = 0f
         private var focusY = 0f
         private var scaleFactor = 1f
@@ -144,13 +149,15 @@ class ZoomEngine(context: Context,
                 return false
             }
 
-            scaleFactor *= detector.scaleFactor
+            if (abs(detector.currentSpan - detector.previousSpan) > SCALE_ACCURACY) {
+                scaleFactor *= detector.scaleFactor
 
-            zoomLayoutCallback.onZoom(scaleFactor, scaleFactor)
+                zoomLayoutCallback.onZoom(scaleFactor, scaleFactor)
+                return false
+            }
 
             if (scaleFactor < 1f) {
                 zoomLayoutCallback.onMove(viewPortRect.width() / 2f, viewPortRect.height() / 2f)
-                return true
             }
 
             zoomLayoutCallback.onMove(
