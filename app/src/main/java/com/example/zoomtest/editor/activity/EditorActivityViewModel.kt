@@ -1,4 +1,4 @@
-package com.example.zoomtest
+package com.example.zoomtest.editor.activity
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,7 @@ import com.example.zoomtest.editor.model.PdfDocument
 import com.example.zoomtest.network.buildNetworkInterface
 import kotlinx.coroutines.launch
 
-class MainActivityViewModel : ViewModel() {
+class EditorActivityViewModel : ViewModel() {
 
     private val networkServiceHelper by lazy {
         buildNetworkInterface()

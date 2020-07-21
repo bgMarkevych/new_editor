@@ -1,9 +1,11 @@
-package com.example.zoomtest
+package com.example.zoomtest.editor.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.zoomtest.App
+import com.example.zoomtest.R
 import com.example.zoomtest.editor.model.PdfDocument
 import com.example.zoomtest.editor.pages_list.PagesAdapter
 import com.example.zoomtest.editor.pages_list.PagesListBuilder
@@ -13,9 +15,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 const val CURRENT_PAGE_KEY = "CURRENT_PAGE_KEY"
 
-class MainActivity : AppCompatActivity() {
+class EditorActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainActivityViewModel
+    private lateinit var viewModel: EditorActivityViewModel
     private lateinit var adapter: PagesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider.AndroidViewModelFactory
                 .getInstance(App.getInstance())
-                .create(MainActivityViewModel::class.java)
+                .create(EditorActivityViewModel::class.java)
 
         viewModel.onCreate(savedInstanceState != null)
 

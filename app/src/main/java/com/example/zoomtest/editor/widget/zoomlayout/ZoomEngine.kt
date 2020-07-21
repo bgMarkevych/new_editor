@@ -153,11 +153,12 @@ class ZoomEngine(context: Context,
                 scaleFactor *= detector.scaleFactor
 
                 zoomLayoutCallback.onZoom(scaleFactor, scaleFactor)
-                return false
+//                return false
             }
 
             if (scaleFactor < 1f) {
                 zoomLayoutCallback.onMove(viewPortRect.width() / 2f, viewPortRect.height() / 2f)
+                return false
             }
 
             zoomLayoutCallback.onMove(
@@ -165,7 +166,7 @@ class ZoomEngine(context: Context,
                     max(viewPortRect.top, min(zoomLayoutCallback.getPivotY() + focusY - detector.focusY, viewPortRect.bottom))
             )
 
-            return true
+            return false
         }
 
         private fun isScaleFactorCorrect(detector: ScaleGestureDetector): Boolean {
